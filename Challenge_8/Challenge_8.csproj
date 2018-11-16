@@ -44,7 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
+    <Compile Include="ProgramUI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SmartInsuranceContent.cs" />
+    <Compile Include="SmartInsurranceRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

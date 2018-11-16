@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Challenge_8
+namespace Challenge_4
 {
-    class Program
+    class Door
     {
-        static void Main(string[] args)
+        public string DoorName { get; set; }
+        public Door()
         {
-            ProgramUI program = new ProgramUI();
-            program.Run();
+
         }
     }
 }
