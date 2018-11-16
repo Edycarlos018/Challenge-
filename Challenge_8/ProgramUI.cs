@@ -53,8 +53,8 @@ namespace Challenge_8
                 Console.WriteLine($"Thank you for helping us doing the Insurance survey?\n\n" +
                     $"1. Survey\n" +
                     $"2. See your information\n" +
-                    $"4. See premium\n" +
-                    $"5. Exit");
+                    $"3. See premium\n" +
+                    $"4. Exit");
                 int response = int.Parse(Console.ReadLine());
                 Console.Clear();
                 switch (response)

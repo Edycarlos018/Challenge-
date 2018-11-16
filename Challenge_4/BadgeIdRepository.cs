@@ -6,35 +6,45 @@ using System.Threading.Tasks;
 
 namespace Challenge_4
 {
-     class BadgeIdRepository
+    class BadgeRepository
     {
-        List<string> _listofBadgeId = new List<string>();
+        List<string> doorList = new List<string>();
+        Dictionary<int, List<string>> badgeID = new Dictionary<int, List<string>>();
 
-        public void AddBadgeIdToList(string content)
+        public void AddDoorToList(string door)
         {
-            _listofBadgeId.Add(content);
+            doorList.Add(door);
         }
 
-        public List<string> GetContentIdList()
+        public void AddBadgeToDictionary(BadgeContent badge)
         {
-            return _listofBadgeId;
+            badgeID.Add(badge.IdNumber, badge.DoorList);
         }
 
-        public void RemoveDoorFromList(string content)
+        public List<string> GetList()
         {
-            _listofBadgeId.Remove(content);
+            return doorList;
+        }
 
+        public Dictionary<int, List<string>> GetBadge()
+        {
+            return badgeID;
+        }
+
+        public void RemoveBadgeFromList(int badgeKey)
+        {
+            badgeID.Remove(badgeKey);
         }
 
         public bool CheckAnswer(string input)
         {
-                switch (input)
-                {
-                    case "y":
-                        return true;
-                    default:
-                        return false;
-                }
+            switch (input)
+            {
+                case "y":
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
 }

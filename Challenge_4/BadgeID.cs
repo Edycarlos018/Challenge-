@@ -6,21 +6,18 @@ using System.Threading.Tasks;
 
 namespace Challenge_4
 {
-    class Badge
+    class BadgeContent
     {
-        public string FullName { get; set; }
-        public string IdNumber { get; set; }
+        public int IdNumber { get; set; }
         public List<string> DoorList { get; set; }
 
-        public Badge(string fullName, string idNumber, List<string> doorList)
+        public BadgeContent(int idNumber, List<string> doorList)
         {
-            FullName = fullName;
             IdNumber = idNumber;
             DoorList = doorList;
         }
-        public Badge()
+        public BadgeContent()
         {
-            DoorList = new List<string>();
         }
     }
 }

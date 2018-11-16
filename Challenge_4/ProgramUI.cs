@@ -8,22 +8,21 @@ namespace Challenge_4
 {
     public class ProgramUI
     {
-        BadgeIdRepository _iDRepo = new BadgeIdRepository();
-        Badge newBadge = new Badge();
+        BadgeRepository _iDRepo = new BadgeRepository();
+
         public void Run()
         {
             Console.WriteLine("Komodo Security\n" +
                 "Type your Badge #");
-            string password = Console.ReadLine();
+            int badgeNumber = int.Parse(Console.ReadLine());
 
-            int input = int.Parse(password);
-            if (input == 1302)
+            if (badgeNumber == 1302)
             {
                 Console.WriteLine("Welcome back Edson");
                 Console.ReadLine();
                 Console.WriteLine($"Hello");
             }
-            else if (input == 1303)
+            else if (badgeNumber == 1303)
             {
                 Console.WriteLine("Welcome back Admin");
             }
@@ -57,28 +56,41 @@ namespace Challenge_4
                 }
             }
         }
-
         private void Delete()
         {
-            PrintDoors();
-            Console.WriteLine("What Door you want to delete?");
-            var removedoor = Console.ReadLine();
+            Dictionary<int, List<string>> badges = _iDRepo.GetBadge();
 
-            foreach (string content in _iDRepo.GetContentIdList())
+            foreach (KeyValuePair<int, List<string>> badge in badges)
             {
-                if (removedoor == content)
+                Console.Write("Badge = {0}, Doors = ", badge.Key);
+                foreach (string content in badge.Value)
                 {
-                    _iDRepo.RemoveDoorFromList(content);
-                    break;
+                    Console.Write(content + " ");
                 }
-
-
             }
+            Console.WriteLine();
+            Console.WriteLine("What Badge do you want to remove?");
+
+
+            int input = int.Parse(Console.ReadLine());
+            _iDRepo.RemoveBadgeFromList(input);
+
+            if (!badges.ContainsKey(input))
+
+            {
+                Console.WriteLine("Key Badge was delete");
+            }
+
+
         }
+
+
+
         private void CreateBadge()
         {
+            List<string> doors = new List<string>();
             Console.WriteLine("Enter Badge #");
-            newBadge.IdNumber = Console.ReadLine();
+            int badgeId = int.Parse(Console.ReadLine());
 
 
             Console.WriteLine("Do you want to assign Door to Badge #? (y/n)");
@@ -89,38 +101,32 @@ namespace Challenge_4
             {
                 Console.WriteLine("Door name?");
                 var door = Console.ReadLine();
-                newBadge.DoorList.Add(door);
-        
-                _iDRepo.AddBadgeIdToList(door);
-
+                doors.Add(door);
 
                 Console.WriteLine("Do you what assign another Door? (y/n)");
                 var newInput = Console.ReadLine();
                 addingDoor = _iDRepo.CheckAnswer(newInput);
             }
-            if (newBadge.DoorList.Count != 0)
-            {
-                PrintDoors();
-            }
-            Console.ReadLine();
+
+            BadgeContent badge = new BadgeContent(badgeId, doors);
+
+            _iDRepo.AddBadgeToDictionary(badge);
         }
 
         private void PrintDoors()
         {
-            Console.WriteLine($"Badge #{newBadge.IdNumber}, have access to Door:");
 
-            foreach (string content in _iDRepo.GetContentIdList())
+            Dictionary<int, List<string>> doors = _iDRepo.GetBadge();
+
+            foreach (KeyValuePair<int, List<string>> badge in doors)
             {
-                Console.WriteLine(content);
+                Console.Write("Badge = {0}, Doors = ", badge.Key);
+                foreach (string content in badge.Value)
+                {
+                    Console.Write(content + " ");
+                }
             }
-        }
-
-        private void Register()
-        {
-            Console.WriteLine("Door name?");
-            var door = Console.ReadLine();
-            _iDRepo.AddBadgeIdToList(door);
-
+            Console.WriteLine();
         }
     }
 }
