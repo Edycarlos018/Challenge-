@@ -27,27 +27,47 @@ namespace Challenge_8
 
             while (exit == false)
             {
-                if (driverAge < 21)
+                if (newSmartContent.DriverAge <= 21)
                     premium = 125m;
                 else
                     premium = 75m;
-                if (drink >= 5)
+                if (newSmartContent.Drink >= 5)
                     premium += 100m;
 
-                if (closeAccident <= 5)
-                    premium += 10m;
+                if (newSmartContent.CloseAccident <= 2)
+                {
+                    if (newSmartContent.CloseAccident != 0)
+                    {
+                        premium += 10m;
+                    }
+                }
                 else
                     premium += 25m;
-                if (stopSign <= 5)
-                    premium += 25m;
+                if (newSmartContent.StopSign <= 5)
+                {
+                    if(newSmartContent.StopSign != 0)
+                    {
+                        premium += 25m;
+                    }
+                }
                 else
                     premium += 75m;
-                if (lateForWork <= 3)
-                    premium += 10m;
+                if (newSmartContent.LateForWork <= 3)
+                {
+                    if(newSmartContent.LateForWork != 0)
+                    {
+                        premium += 10m;
+                    }
+                }
                 else
                     premium += 25m;
-                if (hadAccident <= 5)
-                    premium += 25m;
+                if (newSmartContent.HadAccident <= 5)
+                {
+                    if(newSmartContent.HadAccident != 0)
+                    {
+                        premium += 25m;
+                    }
+                }
                 else
                     premium += 100m;
                 Console.WriteLine($"Thank you for helping us doing the Insurance survey?\n\n" +

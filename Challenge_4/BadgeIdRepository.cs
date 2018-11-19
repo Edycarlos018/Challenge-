@@ -25,6 +25,10 @@ namespace Challenge_4
         {
             return doorList;
         }
+        public void RemoveDoorFromBadge(string doorlistRemo)
+        {
+            doorList.Remove(doorlistRemo);
+        }
 
         public Dictionary<int, List<string>> GetBadge()
         {

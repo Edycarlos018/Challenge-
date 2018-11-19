@@ -8,11 +8,12 @@ namespace Challenge_4
 {
     public class ProgramUI
     {
+        BadgeContent newBadgeContent = new BadgeContent();
         BadgeRepository _iDRepo = new BadgeRepository();
-
+        Dictionary<int, List<string>> badgeID = new Dictionary<int, List<string>>();
         public void Run()
         {
-            Console.WriteLine("Komodo Security\n" +
+            Console.Write("Komodo Security\n" +
                 "Type your Badge #");
             int badgeNumber = int.Parse(Console.ReadLine());
 
@@ -33,7 +34,8 @@ namespace Challenge_4
                 Console.WriteLine(".1 Create Badge\n" +
                    ".2 Delete Badge\n" +
                    ".3 See badge\n" +
-                   ".4 Exit ");
+                   ".4 Update Door\n" +
+                   ".5 Exit ");
                 int newInput = int.Parse(Console.ReadLine());
 
                 switch (newInput)
@@ -48,12 +50,61 @@ namespace Challenge_4
                         PrintDoors();
                         break;
                     case 4:
+                        UpdateDoor();
+                        break;
+                    case 5:
                         exit = false;
                         break;
                     default:
                         Console.WriteLine("Invalid Input");
                         break;
                 }
+            }
+        }
+        private void UpdateDoor()
+        {
+
+            Dictionary<int, List<string>> badgeID = _iDRepo.GetBadge();
+            List<string> listOfDoors = _iDRepo.GetList();
+            Console.Clear();
+            Console.Write("Current badges: ");
+            foreach (KeyValuePair<int, List<string>> IdNumber in _iDRepo.GetBadge())
+            {
+                Console.Write($" {IdNumber.Key}\n");
+            }
+            //Console.WriteLine();
+            Console.Write("\nBe aware that all doors Assigned to this Badge # will be delete.\n" +
+                "Do you want to continue? (y/n):");
+            var input = Console.ReadLine().ToLower();
+            if (input != "y") { return; }
+            Console.WriteLine();
+            {
+                Console.Write("\nEnter Badge #: ");
+                int badgeid = int.Parse(Console.ReadLine());
+                foreach (KeyValuePair<int, List<string>> IdNumber in _iDRepo.GetBadge())
+                {
+                    if (badgeid == IdNumber.Key)
+                    {
+                        //Console.WriteLine();
+                        Console.Write("\nThis Badge currently has no doors assigned. Do you want to add a door to this badge? (y/n): ");
+                        var dooranswer = Console.ReadLine().ToLower();
+                        bool addingdoors = _iDRepo.CheckAnswer(dooranswer);
+                        while (addingdoors)
+                        {
+                            //Console.WriteLine();
+                            Console.WriteLine("\nEnter door name(s) ex:(A2,A3 or A1,golden,blue:");
+                            var doorname = Console.ReadLine();
+                            _iDRepo.AddDoorToList(doorname);
+                            //Console.WriteLine();
+                            Console.Write("Do you want to add another door? (y/n): ");
+                            var answer = Console.ReadLine().ToLower();
+                            addingdoors = _iDRepo.CheckAnswer(answer);
+                        }
+                    }
+                    else { return; }
+                }
+                badgeID[badgeid] = listOfDoors;
+                Console.WriteLine();
             }
         }
         private void Delete()
@@ -69,7 +120,7 @@ namespace Challenge_4
                 }
             }
             Console.WriteLine();
-            Console.WriteLine("What Badge do you want to remove?");
+            Console.Write("What Badge do you want to remove?");
 
 
             int input = int.Parse(Console.ReadLine());
@@ -88,22 +139,23 @@ namespace Challenge_4
 
         private void CreateBadge()
         {
+            Console.Clear();
             List<string> doors = new List<string>();
-            Console.WriteLine("Enter Badge #");
+            Console.Write("Enter Badge # ");
             int badgeId = int.Parse(Console.ReadLine());
 
 
-            Console.WriteLine("Do you want to assign Door to Badge #? (y/n)");
+            Console.Write("Do you want to assign Door to Badge #? (y/n):");
             var input = Console.ReadLine();
             bool addingDoor = _iDRepo.CheckAnswer(input);
 
             while (addingDoor)
             {
-                Console.WriteLine("Door name?");
+                Console.Write("Door name? ");
                 var door = Console.ReadLine();
                 doors.Add(door);
 
-                Console.WriteLine("Do you what assign another Door? (y/n)");
+                Console.Write("Do you what assign another Door? (y/n): ");
                 var newInput = Console.ReadLine();
                 addingDoor = _iDRepo.CheckAnswer(newInput);
             }
@@ -115,7 +167,7 @@ namespace Challenge_4
 
         private void PrintDoors()
         {
-
+            Console.Clear();
             Dictionary<int, List<string>> doors = _iDRepo.GetBadge();
 
             foreach (KeyValuePair<int, List<string>> badge in doors)
@@ -123,7 +175,7 @@ namespace Challenge_4
                 Console.Write("Badge = {0}, Doors = ", badge.Key);
                 foreach (string content in badge.Value)
                 {
-                    Console.Write(content + " ");
+                    Console.Write(content + ": ");
                 }
             }
             Console.WriteLine();

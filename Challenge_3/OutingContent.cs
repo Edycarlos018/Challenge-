@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Challenge_3
 {
-    public enum OutingEvent {Bowling , AmusementPark =1 , GolfGame, Concert }
+    public enum OutingEvent {AmusementPark =1, Bowling, GolfGame, Concert }
     public class OutingContent
     {
         public OutingEvent TypeOfEvent { get; set; }

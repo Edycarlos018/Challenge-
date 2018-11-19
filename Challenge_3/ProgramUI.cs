@@ -33,15 +33,15 @@ namespace Challenge_3
                 switch (input)
                 {
                     case 1:
+
+                        // Console.Clear();
+                        Console.WriteLine("Type" + "   " + "\t\tCustomer #" + "\t\t\tDate" + "\t\t\tEntry Cost" + "\tEventCost");
+                        foreach (OutingContent content in _outingRepo.GetOutingContentList())
                         {
-                           // Console.Clear();
-                            Console.WriteLine("Type" + "   " + "\t\tCustomer #" + "\t\t\tDate" + "\t\t\tEntry Cost" + "\tEventCost");
-                            foreach (OutingContent content in _outingRepo.GetOutingContentList())
-                            {
-                                Console.WriteLine($"{content.TypeOfEvent} \t\t{content.NumberOFCustomer} \t\t{content.OutingDate} \t\t{content.PersonCost} \t\t{content.EventCost}");
-                                Console.ReadLine();
-                            }
+                            Console.WriteLine($"{content.TypeOfEvent} \t\t{content.NumberOFCustomer} \t\t{content.OutingDate} \t\t{content.PersonCost} \t\t{content.EventCost}");
+                            Console.ReadLine();
                         }
+
                         break;
                     case 2:
                         AddOuting();
@@ -133,26 +133,7 @@ namespace Challenge_3
             _outingRepo.AddOutingContentToList(Bowling);
             _outingRepo.AddOutingContentToList(Golf);
             _outingRepo.AddOutingContentToList(Concert);
-           // Console.Clear();
+            // Console.Clear();
         }
-
-       /*
-        public static string TypeOfEvent(Outing outing)
-        {
-            switch (outing)
-            {
-                case Outing.GolfGame:
-                    return "GolfGame";
-                case Outing.AmusementPark:
-                    return "Amusement Park";
-                case Outing.Bowling:
-                    return "Bowling";
-                case Outing.Concert:
-                    return "Concert";
-                default:
-                    return "Invalid Input";
-            }
-        }
-        */
     }
 }
